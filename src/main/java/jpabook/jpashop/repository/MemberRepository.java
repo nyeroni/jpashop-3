@@ -5,6 +5,8 @@ import jakarta.persistence.PersistenceContext;
 import jpabook.jpashop.domain.Member;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MemberRepository {
     @PersistenceContext
@@ -14,7 +16,18 @@ public class MemberRepository {
         em.persist(member);
         return member.getId();
     }
-    public Member find(Long id){
+    public Member findOne(Long id){
         return em.find(Member.class, id);
+    }
+
+    public List<Member> findAll(){
+        return em.createQuery("select m from Member m", Member.class)
+                .getResultList();
+    }
+
+    public List<Member> findByUsername(String username){
+        return em.createQuery("select m from Member m where m.username = :username", Member.class)
+                .setParameter("username", username)
+                .getResultList();
     }
 }
