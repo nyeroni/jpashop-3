@@ -66,7 +66,7 @@ public class ItemController {
         form.setStockQuantity(item.getStockQuantity());
 
         model.addAttribute("form", form);
-        return "items/updateItemForm.html";
+        return "items/updateItemForm";
     }
     /**
      * 상품 수정
