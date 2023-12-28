@@ -36,7 +36,7 @@ public abstract class Item {
     public void removeStock(int quantity){
         int resetStock = this.stockQuantity-quantity;
         if(resetStock<0){
-            throw new NotEnoughStockException("need more stock");;
+            throw new NotEnoughStockException("need more stock");
         }
         this.stockQuantity = resetStock;
     }
