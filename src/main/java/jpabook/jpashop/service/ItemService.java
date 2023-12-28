@@ -23,7 +23,7 @@ public class ItemService {
     public List<Item> findItems(){
         return itemRepository.findAll();
     }
-    public Item findOen(Long id){
+    public Item findOne(Long id){
         return itemRepository.findOne(id);
     }
 }
