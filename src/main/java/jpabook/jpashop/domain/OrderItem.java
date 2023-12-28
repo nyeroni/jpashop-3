@@ -36,7 +36,7 @@ public class OrderItem {
 
     //==비즈니스 로직==//
     /** 주문 취소 */
-    public void calcel(){
+    public void cancel(){
         getItem().addStock(count);
     }
 
