@@ -3,12 +3,10 @@ package jpabook.jpashop.api;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +43,17 @@ public class MemberApiController {
         Long memberId = memberService.join(member);
         return new CreateMemberResponse(memberId);
     }
+
+    /**
+     * 수정 API
+     */
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(@PathVariable("id")Long id, @RequestBody @Valid UpdateMemberRequest request){
+        memberService.update(id, request.getUsername());
+        Member findMember = memberService.findOne(id);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getUsername());
+    }
+
     @Data
     static class CreateMemberRequest{
         private String username;
@@ -57,5 +66,17 @@ public class MemberApiController {
         public CreateMemberResponse(Long id){
             this.id = id;
         }
+    }
+
+    @Data
+    static class UpdateMemberRequest{
+        private String username;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class UpdateMemberResponse{
+        private Long id;
+        private String username;
     }
 }
