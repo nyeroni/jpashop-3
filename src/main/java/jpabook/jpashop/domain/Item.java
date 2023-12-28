@@ -11,7 +11,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
-public class Item {
+public abstract class Item {
 
     @Id
     @GeneratedValue
@@ -24,6 +24,6 @@ public class Item {
 
 
     @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories = new ArrayList<Category>();
 
 }
