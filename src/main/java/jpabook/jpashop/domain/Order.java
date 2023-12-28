@@ -23,7 +23,7 @@ public class Order {
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemList = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class Order {
         member.getOrders().add(this);
     }
     public void addOrderItem(OrderItem orderItem){
-        orderItemList.add(orderItem);
+        orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
     public void setDelivery(Delivery delivery){
@@ -69,7 +69,7 @@ public class Order {
             throw new IllegalStateException("이미 배송완료된 상품은 취소할 수 없습니다.");
         }
         this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem : orderItemList){
+        for(OrderItem orderItem : orderItems){
             orderItem.cancel();
         }
     }
@@ -78,7 +78,7 @@ public class Order {
     /**전체 주문 가격 조회*/
     public int getTotalPrice(){
         int totalPrice = 0;
-        for(OrderItem orderItem : orderItemList){
+        for(OrderItem orderItem : orderItems){
             totalPrice+=orderItem.getTotalPrice();
         }
         return totalPrice;
