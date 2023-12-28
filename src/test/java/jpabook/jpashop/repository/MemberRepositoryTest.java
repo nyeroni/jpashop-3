@@ -1,4 +1,4 @@
-package jpabook.jpashop;
+package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.repository.MemberRepository;
@@ -28,7 +28,7 @@ class MemberRepositoryTest {
 
         //when
         Long memberId = memberRepository.save(member);
-        Member findMember = memberRepository.find(memberId);
+        Member findMember = memberRepository.findOne(memberId);
 
         //then
         Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
