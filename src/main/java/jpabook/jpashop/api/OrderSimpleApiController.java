@@ -42,4 +42,34 @@ public class OrderSimpleApiController {
         return all;
     }
 
+    /**
+     * V2. 엔티티를 조회해서 DTO로 변환(fetch join 사용X)
+     * - 단점 : 지연로딩으로 쿼리 N번 호출
+     */
+    @GetMapping("/api/v2/simple-orders")
+    public List<SimpleOrderDto> ordersV2(){
+        List<Order> orders = orderRepository.findAllByString(new OrderSearch());
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    @Data
+    static class SimpleOrderDto{
+
+        private Long orderId;
+        private String username;
+        private LocalDateTime  orderDate;
+        private OrderStatus orderStatus;
+        private Address address;
+
+        public SimpleOrderDto(Order order){
+            orderId = order.getId();
+            username = order.getMember().getUsername();
+            orderDate = order.getOrderDate();
+            orderStatus = order.getStatus();
+            address = order.getDelivery().getAddress();
+        }
+    }
 }
