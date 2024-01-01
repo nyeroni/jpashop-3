@@ -36,8 +36,7 @@ public class OrderQueryRepository {
      * 1:N 관계(컬렉션)를 제외한 나머지를 한번에 조회 */
     private List<OrderQueryDto> findOrders(){
         return em.createQuery(
-                "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id, m.name, o.orderDate,\n" +
-                        "o.status, d.address)"+
+                "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id, m.username, o.orderDate, o.status, d.address)"+
                         " from Order o"+
                         " join o.member m"+
                         " join o.delivery d", OrderQueryDto.class
